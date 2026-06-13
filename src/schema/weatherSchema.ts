@@ -4,10 +4,10 @@ import { z } from 'zod'
  * Shared schemas
  */
 export const WeatherConditionSchema = z.object({
-  id: z.number(),
-  main: z.string(),
-  description: z.string(),
-  icon: z.string(),
+  id: z.number().or(z.string()),
+  main: z.string().optional(),
+  description: z.string().optional(),
+  icon: z.string().optional(),
 })
 
 export const AlertIdSchema = z.string()
@@ -41,7 +41,7 @@ export const CurrentWeatherDataSchema = z.object({
   wind_speed: z.number(),
   wind_deg: z.number(),
 
-  weather: z.array(WeatherConditionSchema).nullish(),
+  weather: z.array(WeatherConditionSchema).nullish().transform((val) => val ?? []),
 
   alerts: z.array(AlertIdSchema).optional(),
 })
@@ -71,7 +71,10 @@ export const HourlyForecastDataSchema = z.object({
   wind_deg: z.number(),
   wind_gust: z.number().optional(),
 
-  weather: z.array(WeatherConditionSchema).nullish(),
+  weather: z
+    .array(WeatherConditionSchema)
+    .nullish()
+    .transform((val) => val ?? []),
 
   alerts: z.array(AlertIdSchema).optional(),
 
@@ -125,7 +128,10 @@ export const DailyForecastDataSchema = z.object({
   wind_deg: z.number(),
   wind_gust: z.number().optional(),
 
-  weather: z.array(WeatherConditionSchema).nullish(),
+  weather: z
+    .array(WeatherConditionSchema)
+    .nullish()
+    .transform((val) => val ?? []),
 
   rain: z.number().optional(),
   clouds: z.number(),
