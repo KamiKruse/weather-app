@@ -32,7 +32,7 @@ export const CurrentWeatherDataSchema = z.object({
 
   pressure: z.number(),
   humidity: z.number(),
-  dew_point: z.number(),
+  dew_point: z.number().optional(),
 
   uvi: z.number(),
   clouds: z.number(),
@@ -41,7 +41,7 @@ export const CurrentWeatherDataSchema = z.object({
   wind_speed: z.number(),
   wind_deg: z.number(),
 
-  weather: z.array(WeatherConditionSchema),
+  weather: z.array(WeatherConditionSchema).nullish(),
 
   alerts: z.array(AlertIdSchema).optional(),
 })
@@ -61,7 +61,7 @@ export const HourlyForecastDataSchema = z.object({
 
   pressure: z.number(),
   humidity: z.number(),
-  dew_point: z.number(),
+  dew_point: z.number().optional(),
 
   uvi: z.number(),
   clouds: z.number(),
@@ -71,11 +71,11 @@ export const HourlyForecastDataSchema = z.object({
   wind_deg: z.number(),
   wind_gust: z.number().optional(),
 
-  weather: z.array(WeatherConditionSchema),
+  weather: z.array(WeatherConditionSchema).nullish(),
 
   alerts: z.array(AlertIdSchema).optional(),
 
-  pop: z.number(),
+  pop: z.number().optional(),
 })
 
 export const HourlyForecastResponseSchema = BaseResponseSchema.extend({
